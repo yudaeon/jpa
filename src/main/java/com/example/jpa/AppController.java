@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.plaf.PanelUI;
 import java.util.List;
 
 @RestController
@@ -17,20 +18,60 @@ public class AppController {
         this.service = service;
     }
 
-    //RequestMapping과 같이 사용
-    @RequestMapping("students")
-    public void students(){
-        List<Object> result = service.readStudentAll();
+    @GetMapping("create")
+    public @ResponseBody String create() {
+        this.service.createStudent(
+                "alex",
+                35,
+                "010-1234-5678",
+                "alex@gmail.com"
+        );
+        return "done";
+    }
+    @GetMapping("read")
+    public @ResponseBody String readOne(){
+    this.service.readStudent(1L);
+    return "done-read-one";
     }
 
-    @GetMapping("home")
-    public String home(){
-        return "home";
+    @GetMapping("read-all")
+    public @ResponseBody String readAll() {
+        this.service.readStudentAll();
+        return "done-read-all";
     }
 
-    @GetMapping("body")
-    public @ResponseBody String body(){
-        return "body";
+    @GetMapping("update")
+    public @ResponseBody String update(){
+        this.service.updateStudent(1L, "alexander");
+        return "done-update";
+    }
+
+    @GetMapping("delete")
+    public @ResponseBody String delete(){
+        this.service.deleteStudent(1L);
+        return "done-delete";
+    }
+
+    @GetMapping("find")
+    public @ResponseBody String find(){
+        this.service.findAllByTest();
+        return "done-find";
+    }
+
+
+//    //RequestMapping과 같이 사용
+//    @RequestMapping("students")
+//    public void students(){
+//        List<Object> result = service.readStudentAll();
+//    }
+//
+//    @GetMapping("home")
+//    public String home(){
+//        return "home";
+//    }
+//
+//    @GetMapping("body")
+//    public @ResponseBody String body(){
+//        return "body";
 
     }
-}
